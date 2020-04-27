@@ -1,0 +1,10 @@
+@import "../../scss/helpers";
+
+.Fieldset__legend {
+  background-color: black;
+  color: white;
+  font-weight: bold;
+  font-size: spaceby(2);
+  padding: spaceby(1) spaceby(2);
+  margin: 0 0 spaceby(2) 0;
+}

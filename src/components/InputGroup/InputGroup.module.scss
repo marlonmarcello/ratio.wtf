@@ -1,0 +1,11 @@
+@import "../../scss/helpers";
+
+.InputGroup {
+  display: flex;
+  flex-direction: column;
+  margin: 0 0 spaceby(3) 0;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
