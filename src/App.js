@@ -86,7 +86,7 @@ function App() {
         </InputGroup>
       </Fieldset>
       <Card>
-        <p className="txt-weight-bold margin-bottom-4">CSS</p>
+        <p className="txt-weight-bold margin-bottom-4 margin-top-0">CSS</p>
         <pre className={styles.App__output}>
           <code>
             {`.element::before {\n`}
