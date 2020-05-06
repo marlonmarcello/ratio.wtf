@@ -7,3 +7,7 @@
     @return calc(var(--base-space) * #{$space});
   }
 }
+
+@function get-color($color) {
+  @return map-get($colors, $color);
+}

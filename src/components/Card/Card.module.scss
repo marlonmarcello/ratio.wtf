@@ -1,0 +1,10 @@
+@import "../../scss/helpers";
+@import "../../scss/variables";
+
+.Card {
+  background-color: white;
+  border-radius: spaceby(2);
+  border: none;
+  box-shadow: 5px 4px 15px 0 rgba(get-color("color-accent"), 0.2);
+  padding: spaceby(3);
+}

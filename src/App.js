@@ -5,6 +5,8 @@ import Input from "./components/Input/Input";
 import InputGroup from "./components/InputGroup/InputGroup";
 import InputLabel from "./components/InputLabel/InputLabel";
 import Fieldset from "./components/Fieldset/Fieldset";
+import Logo from "./components/Logo/Logo";
+import Card from "./components/Card/Card";
 
 // Styles
 import styles from "./App.module.scss";
@@ -36,12 +38,12 @@ function App() {
           newDimensions.newHeight *
           (newDimensions.width / newDimensions.height);
     }
-
     setDimensions(newDimensions);
   };
 
   return (
     <div className={styles.App}>
+      <Logo className={styles.App__logo} />
       <Fieldset legend="Original dimensions">
         <InputGroup>
           <InputLabel>Width</InputLabel>
@@ -61,7 +63,7 @@ function App() {
             type="number"
           />
         </InputGroup>
-        <p>Ratio: {ratio}</p>
+        <p className={styles["App__ratio-label"]}>Ratio: {ratio}</p>
       </Fieldset>
       <Fieldset legend="New dimensions">
         <InputGroup>
@@ -83,6 +85,21 @@ function App() {
           />
         </InputGroup>
       </Fieldset>
+      <Card>
+        <p className="txt-weight-bold margin-bottom-4">CSS</p>
+        <pre className={styles.App__output}>
+          <code>
+            {`.element::before {\n`}
+            {`  --width: ${dimensions.newWidth || dimensions.width};\n`}
+            {`  --height: ${dimensions.newHeight || dimensions.height};\n`}
+            {`\n`}
+            {`  content: '';\n`}
+            {`  display: block;\n`}
+            {`  padding-bottom: calc((var(--height) / var(--width)) * 100%);\n`}
+            {`}`}
+          </code>
+        </pre>
+      </Card>
     </div>
   );
 }

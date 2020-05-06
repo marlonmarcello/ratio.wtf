@@ -1,0 +1,22 @@
+@import "../../scss/helpers";
+
+.Button {
+  border: none;
+  background-color: var(--color-accent);
+  border-radius: spaceby(0.5);
+  color: white;
+  font: inherit;
+  font-size: 0.9em;
+  font-weight: bold;
+  padding: spaceby();
+
+  &:hover {
+    cursor: pointer;
+    background: var(--color-accent-dark);
+  }
+}
+
+.Button__icon {
+  font-size: 1em;
+  margin-right: spaceby();
+}
