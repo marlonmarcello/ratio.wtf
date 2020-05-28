@@ -2,24 +2,23 @@
 
 .App {
   display: grid;
-  gap: spaceby(4);
-  grid-template-columns: 1fr 1fr 1fr;
-  max-width: 1440px;
+  gap: spaceby(10) spaceby(3);
+  grid-template-columns: 1fr 1fr;
+  max-width: 900px;
   margin: 0 auto;
-  padding: spaceby(2);
+  padding: spaceby(5) spaceby(2);
 }
 
 .App__logo {
   text-align: center;
-  grid-column-end: span 3;
+  grid-column-end: span 2;
 }
 
 .App__ratio-label {
-  margin: spaceby(4) 0 0 0;
-  font-size: 0.9em;
-  font-weight: bold;
-}
+  margin: spaceby(2) 0 0 0;
+  color: var(--color-accent);
 
-.App__output {
-  white-space: pre-wrap;
+  &:last-child {
+    margin-top: spaceby();
+  }
 }

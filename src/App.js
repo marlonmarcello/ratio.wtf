@@ -1,4 +1,5 @@
-import React, { useState, useMemo } from "react";
+import React, { useState } from "react";
+import * as math from "mathjs";
 
 // Components
 import Input from "./components/Input/Input";
@@ -6,7 +7,8 @@ import InputGroup from "./components/InputGroup/InputGroup";
 import InputLabel from "./components/InputLabel/InputLabel";
 import Fieldset from "./components/Fieldset/Fieldset";
 import Logo from "./components/Logo/Logo";
-import Card from "./components/Card/Card";
+
+import { gcdString } from "./utils/helpers";
 
 // Styles
 import styles from "./App.module.scss";
@@ -17,41 +19,89 @@ function App() {
     height: 9,
     newWidth: "",
     newHeight: "",
+    gcdString: gcdString(16, 9),
+    ratio: 16 / 9,
   });
 
-  const ratio = useMemo(() => {
-    if (!dimensions.width || !dimensions.height) return 0;
-    return dimensions.width / dimensions.height;
-  }, [dimensions.height, dimensions.width]);
+  const [wtf, setWtf] = useState(false);
 
-  const updateRatios = (e) => {
+  const evaluateAll = (e) => {
     const name = e.target.name;
-    const val = e.target.value ? parseInt(e.target.value) : "";
-    const newDimensions = { ...dimensions, [name]: val };
+    const val = e.target.value;
+    const { width, height, newWidth, newHeight, ...rest } = dimensions;
 
-    if (newDimensions.width && newDimensions.height && val) {
-      if (name === "newWidth" && val > 0)
-        newDimensions.newHeight =
-          newDimensions.newWidth * (newDimensions.height / newDimensions.width);
-      if (name === "newHeight" && val > 0)
-        newDimensions.newWidth =
-          newDimensions.newHeight *
-          (newDimensions.width / newDimensions.height);
+    let evaluated = { width, height, newWidth, newHeight, [name]: val };
+    let newInputValues = { ...evaluated, ...rest };
+
+    // check for invalid strings
+    let isInvalid = false;
+    for (let [key, val] of Object.entries(evaluated)) {
+      if (val) {
+        try {
+          evaluated[key] = math.evaluate(val);
+        } catch (err) {
+          isInvalid = true;
+        }
+      }
     }
-    setDimensions(newDimensions);
+
+    // if it's invalid set wtf to true
+    if (isInvalid) {
+      if (name === "width" || name === "height") setWtf(true);
+    } else {
+      // otherwise get new dimensions and save
+      if (evaluated.width && evaluated.height) {
+        if (name === "newWidth" || (name === "width" && evaluated.newHeight))
+          newInputValues.newHeight =
+            evaluated.newWidth * (evaluated.height / evaluated.width);
+
+        if (name === "newHeight" || (name === "height" && evaluated.newWidth))
+          newInputValues.newWidth =
+            evaluated.newHeight * (evaluated.width / evaluated.height);
+
+        newInputValues.ratio = evaluated.width / evaluated.height;
+        newInputValues.gcdString = gcdString(evaluated.width, evaluated.height);
+
+        setWtf(false);
+      }
+    }
+
+    // save new inputs
+    setDimensions(newInputValues);
+  };
+
+  const evaluateSingle = (e) => {
+    const name = e.target.name;
+    const val = e.target.value;
+
+    try {
+      const evaluated = math.evaluate(val);
+      setDimensions((cur) => {
+        return { ...cur, [name]: evaluated };
+      });
+    } catch (err) {}
+  };
+
+  const onKeyUp = (e) => {
+    if (e.keyCode === 13) evaluateSingle(e);
   };
 
   return (
     <div className={styles.App}>
-      <Logo className={styles.App__logo} />
+      <Logo
+        className={styles.App__logo}
+        aspectWidth={wtf ? null : dimensions.width}
+        aspectHeight={wtf ? null : dimensions.height}
+      />
       <Fieldset legend="Original dimensions">
         <InputGroup>
           <InputLabel>Width</InputLabel>
           <Input
             value={dimensions.width}
             name="width"
-            onChange={updateRatios}
-            type="number"
+            onChange={evaluateAll}
+            onKeyUp={onKeyUp}
+            type="text"
           />
         </InputGroup>
         <InputGroup>
@@ -59,11 +109,17 @@ function App() {
           <Input
             value={dimensions.height}
             name="height"
-            onChange={updateRatios}
-            type="number"
+            onChange={evaluateAll}
+            onKeyUp={onKeyUp}
+            type="text"
           />
         </InputGroup>
-        <p className={styles["App__ratio-label"]}>Ratio: {ratio}</p>
+        <p className={styles["App__ratio-label"]}>
+          Ratio: {wtf ? "wtf" : dimensions.ratio}
+        </p>
+        <p className={styles["App__ratio-label"]}>
+          Aspect Ratio: {wtf ? "wtf:wtf" : dimensions.gcdString}
+        </p>
       </Fieldset>
       <Fieldset legend="New dimensions">
         <InputGroup>
@@ -71,8 +127,9 @@ function App() {
           <Input
             value={dimensions.newWidth}
             name="newWidth"
-            onChange={updateRatios}
-            type="number"
+            onChange={evaluateAll}
+            onKeyUp={onKeyUp}
+            type="text"
           />
         </InputGroup>
         <InputGroup>
@@ -80,26 +137,12 @@ function App() {
           <Input
             value={dimensions.newHeight}
             name="newHeight"
-            onChange={updateRatios}
-            type="number"
+            onChange={evaluateAll}
+            onKeyUp={onKeyUp}
+            type="text"
           />
         </InputGroup>
       </Fieldset>
-      <Card>
-        <p className="txt-weight-bold margin-bottom-4 margin-top-0">CSS</p>
-        <pre className={styles.App__output}>
-          <code>
-            {`.element::before {\n`}
-            {`  --width: ${dimensions.newWidth || dimensions.width};\n`}
-            {`  --height: ${dimensions.newHeight || dimensions.height};\n`}
-            {`\n`}
-            {`  content: '';\n`}
-            {`  display: block;\n`}
-            {`  padding-bottom: calc((var(--height) / var(--width)) * 100%);\n`}
-            {`}`}
-          </code>
-        </pre>
-      </Card>
     </div>
   );
 }
