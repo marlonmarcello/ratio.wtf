@@ -7,7 +7,9 @@ import InputGroup from "./components/InputGroup/InputGroup";
 import InputLabel from "./components/InputLabel/InputLabel";
 import Fieldset from "./components/Fieldset/Fieldset";
 import Logo from "./components/Logo/Logo";
+import WTCLogo from "./components/WTCLogo/WTCLogo";
 
+// Utils
 import { gcdString } from "./utils/helpers";
 
 // Styles
@@ -143,6 +145,14 @@ function App() {
           />
         </InputGroup>
       </Fieldset>
+      <div className={styles.App__footer}>
+        <p>
+          Brought to you by{" "}
+          <a href="//wethecollective.com">
+            <WTCLogo />
+          </a>
+        </p>
+      </div>
     </div>
   );
 }

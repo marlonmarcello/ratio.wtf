@@ -22,3 +22,33 @@
     margin-top: spaceby();
   }
 }
+
+.App__footer {
+  grid-column-end: span 2;
+  margin-bottom: spaceby(4);
+  text-align: right;
+
+  &::before {
+    background-color: var(--color-accent);
+    content: "";
+    display: inline-block;
+    height: 2px;
+    margin-bottom: spaceby(3);
+    width: 50px;
+  }
+
+  p {
+    font-size: 14px;
+    margin: 0;
+  }
+
+  a {
+    color: inherit;
+    display: block;
+    margin-top: spaceby();
+
+    &:hover {
+      color: var(--color-accent);
+    }
+  }
+}
