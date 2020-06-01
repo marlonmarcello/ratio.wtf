@@ -95,7 +95,7 @@ function App() {
         aspectWidth={wtf ? null : dimensions.width}
         aspectHeight={wtf ? null : dimensions.height}
       />
-      <Fieldset legend="Original dimensions">
+      <Fieldset className={styles.App__fieldset} legend="Original dimensions">
         <InputGroup>
           <InputLabel>Width</InputLabel>
           <Input
@@ -123,7 +123,7 @@ function App() {
           Aspect Ratio: {wtf ? "wtf:wtf" : dimensions.gcdString}
         </p>
       </Fieldset>
-      <Fieldset legend="New dimensions">
+      <Fieldset className={styles.App__fieldset} legend="New dimensions">
         <InputGroup>
           <InputLabel>Width</InputLabel>
           <Input

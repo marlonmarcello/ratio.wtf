@@ -19,7 +19,6 @@ export default function Logo({ className, aspectWidth, aspectHeight }) {
   const [animation, setAnimation] = useState(false);
 
   useEffect(() => {
-    console.log({ aspectWidth, aspectHeight });
     clearTimeout(animateTimer.current);
 
     animateTimer.current = setTimeout(() => {
