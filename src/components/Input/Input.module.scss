@@ -2,15 +2,15 @@
 @import "../../scss/variables";
 
 .Input {
-  background-color: rgba(get-color("color-accent"), 0.1);
+  background-color: var(--color-body);
   border: none;
-  border-radius: spaceby();
-  font-size: spaceby(2);
+  box-shadow: inset 3px 3px 0px 0px #96daea;
+  font-size: spaceby(3);
   padding: spaceby(2);
   width: 100%;
 
   &:focus {
     outline: none;
-    box-shadow: 0px 0px 0px 2px var(--color-accent);
+    box-shadow: 0px 0px 0px 5px #85de76;
   }
 }

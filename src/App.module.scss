@@ -1,25 +1,76 @@
 @import "./scss/helpers";
 
 .App {
-  display: grid;
-  gap: spaceby(4);
-  grid-template-columns: 1fr 1fr 1fr;
-  max-width: 1440px;
+  max-width: 900px;
   margin: 0 auto;
-  padding: spaceby(2);
+  padding: spaceby(5) spaceby(2);
 }
 
 .App__logo {
   text-align: center;
-  grid-column-end: span 3;
+  grid-column-end: span 2;
+  margin-bottom: spaceby(4);
+}
+
+.App__fieldset {
+  margin-bottom: spaceby(2);
 }
 
 .App__ratio-label {
-  margin: spaceby(4) 0 0 0;
-  font-size: 0.9em;
-  font-weight: bold;
+  margin: spaceby(2) 0 0 0;
+  color: var(--color-accent);
+
+  &:last-child {
+    margin-top: spaceby();
+  }
 }
 
-.App__output {
-  white-space: pre-wrap;
+.App__footer {
+  grid-column-end: span 2;
+  margin: spaceby(4) 0;
+  text-align: right;
+
+  &::before {
+    background-color: var(--color-accent);
+    content: "";
+    display: inline-block;
+    height: 2px;
+    margin-bottom: spaceby(3);
+    width: 50px;
+  }
+
+  p {
+    font-size: 14px;
+    margin: 0;
+  }
+
+  a {
+    color: inherit;
+    display: block;
+    margin-top: spaceby();
+
+    &:hover {
+      color: var(--color-accent);
+    }
+  }
+}
+
+@media screen and (min-width: 760px) {
+  .App {
+    display: grid;
+    gap: spaceby(10) spaceby(3);
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .App__logo {
+    margin-bottom: 0;
+  }
+
+  .App__fieldset {
+    margin: 0;
+  }
+
+  .App__footer {
+    margin-top: 0;
+  }
 }
