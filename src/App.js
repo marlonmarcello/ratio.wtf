@@ -148,7 +148,11 @@ function App() {
       <div className={styles.App__footer}>
         <p>
           Brought to you by{" "}
-          <a href="//www.wethecollective.com">
+          <a
+            target="_blank"
+            rel="noopener noreferrer"
+            href="//www.wethecollective.com"
+          >
             <WTCLogo />
           </a>
         </p>
