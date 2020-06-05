@@ -148,7 +148,7 @@ function App() {
       <div className={styles.App__footer}>
         <p>
           Brought to you by{" "}
-          <a href="//wethecollective.com">
+          <a href="//www.wethecollective.com">
             <WTCLogo />
           </a>
         </p>
